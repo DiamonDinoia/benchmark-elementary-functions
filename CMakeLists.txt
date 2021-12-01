@@ -7,7 +7,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(DCMAKE_RULE_MESSAGES OFF)
 
-add_definitions(-DSINGLE)
 
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 if (CMAKE_BUILD_TYPE MATCHES Debug)
@@ -15,7 +14,7 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_options(-Wall -Wextra -pedantic)
 endif ()
 if (CMAKE_BUILD_TYPE MATCHES Release)
-    add_compile_options(-freciprocal-math -fmerge-all-constants -fno-math-errno)
+    add_compile_options(-freciprocal-math -fmerge-all-constants -fno-math-errno -g)
     add_compile_options(-O3 -march=native -funroll-loops -finline-functions -ftree-vectorize)
 endif ()
 
@@ -23,10 +22,12 @@ Include(FetchContent)
 FetchContent_Declare(
         Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG        v2.13.1)
+        GIT_TAG v2.13.1)
 FetchContent_MakeAvailable(Catch2)
 
 include_directories(inc)
 
-add_executable(benchmark main.cpp)
-target_link_libraries(benchmark PRIVATE Catch2::Catch2)
+add_executable(log log.cpp)
+target_link_libraries(log Catch2::Catch2 m)
+add_executable(sincos sincos.cpp)
+target_link_libraries(sincos Catch2::Catch2 m)

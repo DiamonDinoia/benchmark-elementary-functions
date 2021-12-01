@@ -30,7 +30,7 @@ float approximate_logf(float a) {
     float m, r, s, t, i, f;
     int32_t e;
 
-    e = reinterpetToInt(a) - 0x3f2aaaab & 0xff800000;
+    e = (reinterpetToInt(a) - 0x3f2aaaab) & 0xff800000;
     m = reinterpretToFloat(reinterpetToInt(a) - e);
     i = (float)e * 1.19209290e-7f;  // 0x1.0p-23
     /* m in [2/3, 4/3] */
