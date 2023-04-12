@@ -4,14 +4,15 @@ this repo aims to test the performance and accuracy different elementary functio
 
 # logarithm results:
 
-STD DOUBLE 8.5423 ms
+STD DOUBLE 65.458 us
 
-STD SINGLE 4.1605 ms ERROR: AVG 1.38617e-08 MAX 5.86492e-08
+STD SINGLE 50.739 us ERROR: AVG 1.38617e-08 MAX 5.86492e-08
 
-FAST LOGF 5.5045 ms ERROR: AVG 1.43832e-08 MAX 7.55761e-08
+FAST LOGF 47.7693 us ERROR: AVG 1.43832e-08 MAX 7.55761e-08
 
-APPROXIMATE LOGF 2.6552 ms ERROR: AVG 5.74123e-06 MAX 1.49805e-05
+APPROXIMATE LOGF  2.5359 us ms ERROR: AVG 5.74123e-06 MAX 1.49805e-05
 
+FASTER LOGF  1.14601 us ERROR: AVG  0.0125169 MAX 0.0401875
 ### On my machine only approximate logf and std::log seems to be worth
 
 # sincos results:
