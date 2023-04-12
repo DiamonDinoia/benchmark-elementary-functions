@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(benchmark-elementary-functions)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -25,9 +25,19 @@ FetchContent_Declare(
         GIT_TAG v2.13.1)
 FetchContent_MakeAvailable(Catch2)
 
+
+file(DOWNLOAD
+    https://gitlab.com/libeigen/eigen/-/raw/3.4/cmake/FindStandardMathLibrary.cmake
+    ${CMAKE_BINARY_DIR}/cmake/FindStandardMathLibrary.cmake
+)
+set(CMAKE_MODULE_PATH "${CMAKE_BINARY_DIR}/cmake" ${CMAKE_MODULE_PATH})
+find_package(StandardMathLibrary REQUIRED)
+
+
 include_directories(inc)
 
 add_executable(log log.cpp)
-target_link_libraries(log Catch2::Catch2 m)
+target_link_libraries(log Catch2::Catch2 ${STANDARD_MATH_LIBRARY})
+
 add_executable(sincos sincos.cpp)
-target_link_libraries(sincos Catch2::Catch2 m)
+target_link_libraries(sincos Catch2::Catch2 ${STANDARD_MATH_LIBRARY})

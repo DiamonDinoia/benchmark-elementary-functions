@@ -2,27 +2,12 @@
 // Created by mbarbone on 12/1/21.
 //
 
+#include <bit>
 #include <cmath>
 
 #ifndef BENCHMARK_ELEMENTARY_FUNCTIONS_INC_LOGARITHMS_H_
 #define BENCHMARK_ELEMENTARY_FUNCTIONS_INC_LOGARITHMS_H_
-namespace {
-inline float reinterpretToFloat(const int32_t a) {
-    union {
-        int32_t nVal;
-        float flVal;
-    } tOffset = {a};
-    return tOffset.flVal;
-}
 
-inline int32_t reinterpetToInt(const float a) {
-    union {
-        float flVal;
-        int32_t nVal;
-    } tOffset = {a};
-    return tOffset.nVal;
-}
-}  // namespace
 /* compute natural logarithm, maximum error 0.85089 ulps
  * source https://stackoverflow.com/questions/39821367/very-fast-approximate-logarithm-natural-log-function-in-c
  */
@@ -30,8 +15,8 @@ float approximate_logf(float a) {
     float m, r, s, t, i, f;
     int32_t e;
 
-    e = (reinterpetToInt(a) - 0x3f2aaaab) & 0xff800000;
-    m = reinterpretToFloat(reinterpetToInt(a) - e);
+    e = (std::bit_cast<int32_t>(a) - 0x3f2aaaab) & 0xff800000;
+    m = std::bit_cast<float>(std::bit_cast<int32_t>(a) - e);
     i = (float)e * 1.19209290e-7f;  // 0x1.0p-23
     /* m in [2/3, 4/3] */
     f = m - 1.0f;
@@ -57,8 +42,8 @@ float fast_logf(float a) {
         a = a * 8388608.0f;      // 0x1.0p+23
         i = -23.0f;
     }
-    e = (reinterpetToInt(a) - reinterpetToInt(0.666666667f)) & 0xff800000;
-    m = reinterpretToFloat(reinterpetToInt(a) - e);
+    e = (std::bit_cast<int32_t>(a) - std::bit_cast<int32_t>(0.666666667f)) & 0xff800000;
+    m = std::bit_cast<float>(std::bit_cast<int32_t>(a) - e);
     i = fmaf((float)e, 1.19209290e-7f, i);  // 0x1.0p-23
     /* m in [2/3, 4/3] */
     m = m - 1.0f;
@@ -83,4 +68,12 @@ float fast_logf(float a) {
     }
     return r;
 }
+
+/* compute natural logarithm,
+ * source https://github.com/ekmett/approximate/blob/dc1ee7cef58a6b31661edde6ef4a532d6fc41b18/cbits/fast.c#L127
+ */
+constexpr float faster_logf(const float a) noexcept {
+    return (std::bit_cast<int32_t>(a) - 1064866805) * 8.262958405176314e-8f; /* 1 / 12102203.0; */
+}
+
 #endif  // BENCHMARK_ELEMENTARY_FUNCTIONS_INC_LOGARITHMS_H_

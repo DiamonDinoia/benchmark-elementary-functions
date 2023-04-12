@@ -1,8 +1,8 @@
 //
 // Created by mbarbone on 12/1/21.
 //
-#include "utils.h"
 #include "logarithms.h"
+#include "utils.h"
 
 #define CATCH_CONFIG_ENABLE_BENCHMARKING
 #define CATCH_CONFIG_RUNNER
@@ -38,6 +38,12 @@ TEST_CASE("Logarithm") {
     BENCHMARK("APPROXIMATE LOGF") {
         for (int i = 0; i < TESTS; ++i) {
             result[i] = approximate_logf(inputs[i]);
+        }
+    };
+    checkError(reference, result);
+    BENCHMARK("FASTER LOGF") {
+        for (int i = 0; i < TESTS; ++i) {
+            result[i] = faster_logf(inputs[i]);
         }
     };
     checkError(reference, result);

@@ -8,8 +8,8 @@
 #define _GNU_SOURCE /* See feature_test_macros(7) */
 #include <math.h>
 
-template<typename T>
-void mySinCos(const T x, T& sin, T& cos){
+template <typename T>
+void mySinCos(const T x, T& sin, T& cos) {
     sin = std::sin(x);
     cos = std::cos(x);
 }

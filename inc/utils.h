@@ -5,10 +5,10 @@
 #ifndef BENCHMARK_ELEMENTARY_FUNCTIONS_INC_UTILS_H_
 #define BENCHMARK_ELEMENTARY_FUNCTIONS_INC_UTILS_H_
 
-#include <cmath>
-#include <vector>
-#include <iostream>
 #include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <vector>
 
 constexpr auto TESTS = 16384;
 
