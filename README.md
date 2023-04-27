@@ -14,15 +14,14 @@ This repository aims to test the performance and accuracy of different elementar
 
 Faster logf is 44 times faster than std::log but is also much less accurate.
 
-As the image shwos:
-[Alt text](./controllers_brief.svg)
+[](./controllers_brief.svg)
 <img src="./log.svg">
 
 ## SinCos Results
 
 | Function              | Time (ms) | 
 |-----------------------|-----------|
-| STD SIN COS            | 34.9386   |
-| STD SINCOS             | 34.8707   |
+| STD SIN COS           | 34.9386   |
+| STD SINCOS            | 34.8707   |
 
 It seems that `gcc-11` optimizes two different calls to `sin` and `cos` to the fast function `sincos` that computes both at the same time.
