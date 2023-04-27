@@ -14,6 +14,10 @@ This repository aims to test the performance and accuracy of different elementar
 
 Faster logf is 44 times faster than std::log but is also much less accurate.
 
+As the image shwos:
+[Alt text](./controllers_brief.svg)
+<img src="./log.svg">
+
 ## SinCos Results
 
 | Function              | Time (ms) | 
